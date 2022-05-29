@@ -1,15 +1,13 @@
 using System;
 using System.Linq;
 
-
-
 namespace emekHaqqi
 {
     class Program
     {
         static void Main(string[] args)
         {
-            #region Variables
+            #region Deyisenler
             decimal netSalary = 0;
             decimal taxinAZN = 0;
             int tax = 0;
@@ -18,7 +16,6 @@ namespace emekHaqqi
             int childpayment = 0;
             decimal totalGrossMaas = 0;
             #endregion
-
             #region Sorgular
             Console.WriteLine("======================== Gelir hesablama proyekti ========================");
             Console.Write("Salam deyerli işçi . Xahiş edirik maaşınızı qeyd ediniz: ");
@@ -34,7 +31,6 @@ namespace emekHaqqi
             {
                 disabled = false;
             }
-
             Console.Write("Aile veziyyetinizi qeyd ediniz : (E: evli, S: subay, D: dul): ");
             string status = (Console.ReadLine().ToLower());
             if (status != "s")
@@ -55,21 +51,18 @@ namespace emekHaqqi
                         {
                             startPayment = startPayment - 5;
                         }
-
                         if (i > 3)
                         {
                             startPayment = 0;
                             childpayment = childpayment + 15;
                         }
-
                         childpayment = childpayment + startPayment;
-
-
                     }
                 }
                 else
                 {
                     Console.WriteLine("Uşağınız olmadığı üçün elave ödeniş almırsınız . ");
+                    Console.WriteLine("Usaq pulu : " + childpayment);
                 }
 
                 if (status == "d")
@@ -93,113 +86,61 @@ namespace emekHaqqi
             #region Hesablama
             Console.WriteLine("====================================================");
 
+            totalGrossMaas = GrossMaas + childpayment + marriagePayment;
 
-             totalGrossMaas = GrossMaas + childpayment + marriagePayment;
-            
-            if (totalGrossMaas <= 1000)
+            if (disabled == true)
             {
-                if (disabled == true)
+                if (totalGrossMaas <= 1000)
                 {
                     tax = 15;
-                    taxinAZN = Math.Round(((totalGrossMaas * tax / 100) * 50 / 100), 2);
-                    netSalary = Math.Round((totalGrossMaas - taxinAZN), 2); ;
-                    Console.WriteLine("Vergi tetbiq olunmadan onceki maasiniz : " + totalGrossMaas + " AZN ");
-                    Console.WriteLine("elillik dereceniz üçün xalis maaşınız : " + netSalary + "AZN");
-                    Console.WriteLine("Maaşınıza tetbiq olunan vergi faizi : " + "7.5" + "%");
-                    Console.WriteLine("Maaşınızdan çıxılan vergi : " + taxinAZN + "AZN");
-
-
+                    tax = tax / 2;
                 }
-                else
+                else if (totalGrossMaas > 1000 && totalGrossMaas <= 2000)
+                {
+                    tax = 20;
+                    tax = tax / 2;
+                }
+                else if (totalGrossMaas > 2000 && totalGrossMaas <= 3000)
+                {
+                    tax = 25;
+                    tax = tax / 2;
+                }
+                else if (totalGrossMaas > 3000)
+                {
+                    tax = 30;
+                    tax = tax / 2;
+                }
+            }
+            else
+            {
+                if (totalGrossMaas <= 1000)
                 {
                     tax = 15;
-                    taxinAZN = Math.Round((totalGrossMaas * tax / 100), 2);
-                    netSalary = Math.Round((totalGrossMaas - taxinAZN), 2);
-                    Console.WriteLine("Vergi tetbiq olunmadan onceki maasiniz : " + totalGrossMaas + " AZN ");
-                    Console.WriteLine("Xalis maaşınız : " + netSalary + "AZN");
-                    Console.WriteLine("Maaşınıza tetbiq olunan vergi derecesi: " + tax + "%");
-                    Console.WriteLine("Maaşınızdan çıxılan vergi : " + taxinAZN + "AZN");
                 }
-            }
-
-            if (totalGrossMaas > 1000 && totalGrossMaas <= 2000)
-            {
-                if (disabled == true)
+                else if (totalGrossMaas > 1000 && totalGrossMaas <= 2000)
                 {
                     tax = 20;
-                    taxinAZN = Math.Round(((totalGrossMaas * tax / 100) * 50 / 100), 2);
-                    netSalary = Math.Round((totalGrossMaas - taxinAZN), 2);
-                    Console.WriteLine("Vergi tetbiq olunmadan onceki maasiniz : " + totalGrossMaas + " AZN ");
-                    Console.WriteLine("elillik dereceniz üçün xalis maaşınız : " + netSalary + "AZN");
-                    Console.WriteLine("Maaşınıza tetbiq olunan vergi faizi : " + "10" + "%");
-                    Console.WriteLine("Maaşınızdan çıxılan vergi : " + taxinAZN + "AZN");
                 }
-                else
-                {
-                    tax = 20;
-                    taxinAZN = Math.Round((totalGrossMaas * tax / 100), 2);
-                    netSalary = Math.Round((totalGrossMaas - taxinAZN), 2);
-                    Console.WriteLine("Vergi tetbiq olunmadan onceki maasiniz : " + totalGrossMaas + " AZN ");
-                    Console.WriteLine("Xalis maaşınız : " + netSalary + "AZN");
-                    Console.WriteLine("Maaşınıza tetbiq olunan vergi derecesi: " + tax + "%");
-                    Console.WriteLine("Maaşınızdan çıxılan vergi : " + taxinAZN + "AZN");
-                }
-            }
-
-            if (totalGrossMaas > 2000 && totalGrossMaas <= 3000)
-            {
-                if (disabled == true)
+                else if (totalGrossMaas > 2000 && totalGrossMaas <= 3000)
                 {
                     tax = 25;
-                    taxinAZN = Math.Round(((totalGrossMaas * tax / 100) * 50 / 100), 2);
-                    netSalary = Math.Round((totalGrossMaas - taxinAZN), 2);
-                    Console.WriteLine("Vergi tetbiq olunmadan onceki maasiniz : " + totalGrossMaas + " AZN ");
-                    Console.WriteLine("elillik dereceniz üçün xalis maaşınız : " + netSalary + "AZN");
-                    Console.WriteLine("Maaşınıza tetbiq olunan vergi faizi : " + "12.5" + "%");
-                    Console.WriteLine("Maaşınızdan çıxılan vergi : " + taxinAZN + "AZN");
                 }
-                else
-                {
-                    tax = 25;
-                    taxinAZN = Math.Round((totalGrossMaas * tax / 100), 2);
-                    netSalary = Math.Round((totalGrossMaas - taxinAZN), 2);
-                    Console.WriteLine("Vergi tetbiq olunmadan onceki maasiniz : " + totalGrossMaas + " AZN ");
-                    Console.WriteLine("Xalis maaşınız : " + netSalary + "AZN");
-                    Console.WriteLine("Maaşınıza tetbiq olunan vergi derecesi: " + tax + "%");
-                    Console.WriteLine("Maaşınızdan çıxılan vergi : " + taxinAZN + "AZN");
-                }
-            }
-
-            if (totalGrossMaas > 3000)
-            {
-                if (disabled == true)
+                else if (totalGrossMaas > 3000)
                 {
                     tax = 30;
-                    taxinAZN = Math.Round(((totalGrossMaas * tax / 100) * 50 / 100), 2);
-                    netSalary = Math.Round((totalGrossMaas - taxinAZN), 2);
-                    Console.WriteLine("Vergi tetbiq olunmadan onceki maasiniz : " + totalGrossMaas + " AZN ");
-                    Console.WriteLine("elillik dereceniz üçün xalis maaşınız : " + netSalary);
-                    Console.WriteLine("Maaşınıza tetbiq olunan vergi faizi : " + "15" + "%");
-                    Console.WriteLine("Maaşınızdan çıxılan vergi : " + taxinAZN);
-                }
-                else
-                {
-                    tax = 30;
-                    taxinAZN = Math.Round((totalGrossMaas * tax / 100), 2);
-                    netSalary = Math.Round((totalGrossMaas - taxinAZN), 2);
-                    Console.WriteLine("Vergi tetbiq olunmadan onceki maasiniz : " + totalGrossMaas + " AZN ");
-                    Console.WriteLine("Xalis maaşınız : " + netSalary + "AZN");
-                    Console.WriteLine("Maaşınıza tetbiq olunan vergi derecesi: " + tax + "%");
-                    Console.WriteLine("Maaşınızdan çıxılan vergi : " + taxinAZN + "AZN");
                 }
             }
             #endregion
-
+            #region Ekrana Cap
+            taxinAZN = Math.Round(((totalGrossMaas * tax / 100)), 2);
+            netSalary = Math.Round((totalGrossMaas - taxinAZN), 2);
+            Console.WriteLine("Vergi tetbiq olunmadan onceki maasiniz : " + totalGrossMaas + " AZN ");
+            Console.WriteLine("elillik dereceniz üçün xalis maaşınız : " + netSalary + "AZN");
+            Console.WriteLine("Maaşınıza tetbiq olunan vergi faizi : " + tax + "%");
+            Console.WriteLine("Maaşınızdan çıxılan vergi : " + taxinAZN + "AZN");
+            #endregion
             #region Odenis
-
-
             int[] banknot = { 200, 100, 50, 20, 10, 5, 1 };
-
             Console.WriteLine("Odenisinizi bu şekilde alacaqsiniz : ");
             Console.WriteLine("====================================================");
             for (int i = 0; i < banknot.Length; i++)
@@ -208,7 +149,7 @@ namespace emekHaqqi
                 netSalary = netSalary - (qaliq * banknot[i]);
                 if (qaliq == 0)
                 {
-                    Console.WriteLine("...");
+                    Console.Write("\n");
                 }
                 else
                 {
@@ -216,10 +157,7 @@ namespace emekHaqqi
                 }
             }
 
-
-
             #endregion
-
         }
     }
 }
